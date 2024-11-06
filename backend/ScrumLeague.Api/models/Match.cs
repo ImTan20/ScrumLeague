@@ -27,6 +27,5 @@ namespace ScrumLeague.Models
                 return "Draw";
             }
         }
-
     }
 }
