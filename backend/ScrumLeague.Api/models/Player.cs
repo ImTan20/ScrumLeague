@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ScrumLeague.Models
 {
@@ -8,19 +9,20 @@ namespace ScrumLeague.Models
 
         //Limit character length to 50
         [MaxLength(50)]
-        public string FirstName { get; set; }
+        public required string FirstName { get; set; }
 
         [MaxLength(50)]
-        public string LastName { get; set; }
+        public required string LastName { get; set; }
 
         [MaxLength(50)]
-        public string Position { get; set; }
+        public required string Position { get; set; }
         public int Tries { get; set; }
         public int Tackles { get; set; }
         public int Carries { get; set; }
         //Foreign Key
         public int TeamId { get; set; }
         //Navigation Property
+        [JsonIgnore]
         public Team? Team { get; set; }
     }
 }

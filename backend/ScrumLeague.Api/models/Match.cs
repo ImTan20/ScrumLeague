@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace ScrumLeague.Models
 {
     public class Match
@@ -9,7 +11,9 @@ namespace ScrumLeague.Models
         public int AwayTeamId { get; set; }
 
         //Navigation Properties
+        [JsonIgnore]
         public Team? HomeTeam { get; set; }
+        [JsonIgnore]
         public Team? AwayTeam { get; set; }
 
         //Scores
