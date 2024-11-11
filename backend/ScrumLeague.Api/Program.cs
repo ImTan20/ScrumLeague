@@ -5,9 +5,8 @@ using ScrumLeague.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(); // Register Swagger generator for API documentation
 
 // Add controllers (needed for API endpoints)
 builder.Services.AddControllers();
@@ -16,18 +15,38 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<ScrumLeagueDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Configure CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins",
+        policy =>
+        {
+            policy.WithOrigins("https://your-frontend-url.com") // temporary, replace with actual frontend URL
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger(); // Enable Swagger JSON endpoint
+    app.UseSwaggerUI(c =>  // Configure Swagger UI
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "ScrumLeague API V1"); // Custom endpoint name and version
+        c.RoutePrefix = string.Empty; // Set Swagger UI to load at the app's root URL
+    });
 }
 
+// Redirect HTTP to HTTPS
 app.UseHttpsRedirection();
 
-// Add routing middleware for API controller endpoints
-app.MapControllers(); // This maps the controllers for API endpoints
+// Enable CORS with the specified policy
+app.UseCors("AllowSpecificOrigins"); // Apply the CORS policy
+
+// Map controllers for API routes, routing middleware
+app.MapControllers();
 
 app.Run();
