@@ -23,31 +23,59 @@ namespace ScrumLeague.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Player>>> GetPlayers()
         {
-            return await _context.Players.Include(p => p.Team).ToListAsync();
+            try
+            {
+                var players = await _context.Players.Include(p => p.Team).ToListAsync();
+                return Ok(players); // Return players with team details
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while fetching the players", Error = ex.Message });
+            }
         }
 
         // GET: api/Players/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Player>> GetPlayer(int id)
         {
-            var player = await _context.Players.Include(p => p.Team).FirstOrDefaultAsync(p => p.Id == id);
-
-            if (player == null)
+            try
             {
-                return NotFound();
-            }
+                var player = await _context.Players.Include(p => p.Team).FirstOrDefaultAsync(p => p.Id == id);
 
-            return player;
+                if (player == null)
+                {
+                    return NotFound(new { Message = "Player not found" });
+                }
+
+                return Ok(player); // Return the player with team details
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while fetching the player", Error = ex.Message });
+            }
         }
 
         // POST: api/Players
         [HttpPost]
         public async Task<ActionResult<Player>> CreatePlayer(Player player)
         {
-            _context.Players.Add(player);
-            await _context.SaveChangesAsync();
+            // Validate if the team exists
+            var teamExists = await _context.Teams.AnyAsync(t => t.Id == player.TeamId);
+            if (!teamExists)
+            {
+                return BadRequest(new { Message = "Invalid TeamId" });
+            }
 
-            return CreatedAtAction(nameof(GetPlayer), new { id = player.Id }, player);
+            try
+            {
+                _context.Players.Add(player);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction(nameof(GetPlayer), new { id = player.Id }, player); // Return 201 created response
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while creating the player", Error = ex.Message });
+            }
         }
 
         // PUT: api/Players/5
@@ -56,7 +84,14 @@ namespace ScrumLeague.Api.Controllers
         {
             if (id != player.Id)
             {
-                return BadRequest();
+                return BadRequest(new { Message = "ID in the path does not match ID in the player data" });
+            }
+
+            // Validate if the team exists
+            var teamExists = await _context.Teams.AnyAsync(t => t.Id == player.TeamId);
+            if (!teamExists)
+            {
+                return BadRequest(new { Message = "Invalid TeamId" });
             }
 
             _context.Entry(player).State = EntityState.Modified;
@@ -69,15 +104,19 @@ namespace ScrumLeague.Api.Controllers
             {
                 if (!_context.Players.Any(e => e.Id == id))
                 {
-                    return NotFound();
+                    return NotFound(new { Message = "Player not found" });
                 }
                 else
                 {
-                    throw;
+                    return StatusCode(500, new { Message = "A concurrency error occurred while updating the player" });
                 }
             }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while updating the player", Error = ex.Message });
+            }
 
-            return NoContent();
+            return NoContent(); // Successfully updated
         }
 
         // DELETE: api/Players/5
@@ -87,13 +126,20 @@ namespace ScrumLeague.Api.Controllers
             var player = await _context.Players.FindAsync(id);
             if (player == null)
             {
-                return NotFound();
+                return NotFound(new { Message = "Player not found" });
             }
 
-            _context.Players.Remove(player);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Players.Remove(player);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while deleting the player", Error = ex.Message });
+            }
 
-            return NoContent();
+            return NoContent(); // Successfully deleted
         }
     }
 }

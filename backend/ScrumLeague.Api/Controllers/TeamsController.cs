@@ -23,28 +23,57 @@ namespace ScrumLeague.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Team>>> GetTeams()
         {
-            return await _context.Teams.ToListAsync();
+            try
+            {
+                var teams = await _context.Teams.ToListAsync();
+                return Ok(teams); // Return all teams
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while fetching the teams", Error = ex.Message });
+            }
         }
 
         // GET: api/Teams/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Team>> GetTeam(int id)
         {
-            var team = await _context.Teams.FindAsync(id);
-            if (team == null)
+            try
             {
-                return NotFound();
+                var team = await _context.Teams.FindAsync(id);
+                if (team == null)
+                {
+                    return NotFound(new { Message = "Team not found" });
+                }
+
+                return Ok(team); // Return the team
             }
-            return team;
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while fetching the team", Error = ex.Message });
+            }
         }
 
         // POST: api/Teams
         [HttpPost]
         public async Task<ActionResult<Team>> CreateTeam(Team team)
         {
-            _context.Teams.Add(team);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetTeam), new { id = team.Id }, team);
+            // Validate that team name is not null or empty
+            if (string.IsNullOrWhiteSpace(team.Name))
+            {
+                return BadRequest(new { Message = "Team name cannot be empty" });
+            }
+
+            try
+            {
+                _context.Teams.Add(team);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction(nameof(GetTeam), new { id = team.Id }, team); // Return 201 created response
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while creating the team", Error = ex.Message });
+            }
         }
 
         // PUT: api/Teams/5
@@ -53,9 +82,17 @@ namespace ScrumLeague.Api.Controllers
         {
             if (id != team.Id)
             {
-                return BadRequest();
+                return BadRequest(new { Message = "ID in the path does not match ID in the team data" });
             }
+
+            // Validate that team name is not null or empty
+            if (string.IsNullOrWhiteSpace(team.Name))
+            {
+                return BadRequest(new { Message = "Team name cannot be empty" });
+            }
+
             _context.Entry(team).State = EntityState.Modified;
+
             try
             {
                 await _context.SaveChangesAsync();
@@ -64,14 +101,19 @@ namespace ScrumLeague.Api.Controllers
             {
                 if (!_context.Teams.Any(e => e.Id == id))
                 {
-                    return NotFound();
+                    return NotFound(new { Message = "Team not found" });
                 }
                 else
                 {
-                    throw;
+                    return StatusCode(500, new { Message = "A concurrency error occurred while updating the team" });
                 }
             }
-            return NoContent();
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while updating the team", Error = ex.Message });
+            }
+
+            return NoContent(); // Successfully updated
         }
 
         // DELETE: api/Teams/5
@@ -81,11 +123,20 @@ namespace ScrumLeague.Api.Controllers
             var team = await _context.Teams.FindAsync(id);
             if (team == null)
             {
-                return NotFound();
+                return NotFound(new { Message = "Team not found" });
             }
-            _context.Teams.Remove(team);
-            await _context.SaveChangesAsync();
-            return NoContent();
+
+            try
+            {
+                _context.Teams.Remove(team);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while deleting the team", Error = ex.Message });
+            }
+
+            return NoContent(); // Successfully deleted
         }
     }
 }
