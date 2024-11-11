@@ -9,8 +9,8 @@ namespace ScrumLeague.Models
         public int AwayTeamId { get; set; }
 
         //Navigation Properties
-        public Team HomeTeam { get; set; }
-        public Team AwayTeam { get; set; }
+        public Team? HomeTeam { get; set; }
+        public Team? AwayTeam { get; set; }
 
         //Scores
         public int HomeScore { get; set; }

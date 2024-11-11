@@ -21,7 +21,7 @@ namespace ScrumLeague.Models
         //Foreign Key
         public int TeamId { get; set; }
         //Navigation Property
-        public Team Team { get; set; }
+        public Team? Team { get; set; }
     }
 }
 

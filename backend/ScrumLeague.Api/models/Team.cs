@@ -11,9 +11,9 @@ namespace ScrumLeague.Models
 		public int Points { get; set; }
 		public int GamesPlayed { get; set; }
 
-		//Navigation properties
-		public List<Player> Players { get; set; }
-		public List<Match> HomeMatches { get; set; }
-		public List<Match> AwayMatches { get; set; }
-	}
+        // Navigation properties - made nullable for team creation
+        public List<Player>? Players { get; set; } = new List<Player>();
+        public List<Match>? HomeMatches { get; set; } = new List<Match>();
+        public List<Match>? AwayMatches { get; set; } = new List<Match>();
+    }
 }

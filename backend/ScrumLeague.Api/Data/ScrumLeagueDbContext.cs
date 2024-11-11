@@ -17,8 +17,8 @@ namespace ScrumLeague.Data
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			// Configure the relationship between Match and Team (HomeTeam)
-			modelBuilder.Entity<Match>()
+            // Configure the relationship between Match and Team (HomeTeam)
+            modelBuilder.Entity<Match>()
 				.HasOne(m => m.HomeTeam)  // Match has one HomeTeam
 				.WithMany(t => t.HomeMatches)  // Team has many HomeMatches
 				.HasForeignKey(m => m.HomeTeamId)  // HomeTeamId is the foreign key in Match
