@@ -1,26 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PlayerList from './components/PlayerList';
+import TeamList from './components/TeamList';
+import MatchList from './components/MatchList';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <h1>Scrum League</h1>
+        <nav>
+          <ul>
+            <li><a href="/players">Players</a></li>
+            <li><a href="/teams">Teams</a></li>
+            <li><a href="/matches">Matches</a></li>
+          </ul>
+        </nav>
+
+        <Routes>
+          <Route path="/players" element={<PlayerList />} />
+          <Route path="/teams" element={<TeamList />} />
+          <Route path="/matches" element={<MatchList />} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
