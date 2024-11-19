@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ScrumLeague.Data;
 
@@ -10,9 +11,11 @@ using ScrumLeague.Data;
 namespace ScrumLeague.Api.Migrations
 {
     [DbContext(typeof(ScrumLeagueDbContext))]
-    partial class ScrumLeagueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241115002954_UpdateMatchDateToString")]
+    partial class UpdateMatchDateToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

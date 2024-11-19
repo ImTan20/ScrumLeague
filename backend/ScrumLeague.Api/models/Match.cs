@@ -5,7 +5,7 @@ namespace ScrumLeague.Models
     public class Match
     {
         public int Id { get; set; }
-        public DateTime Date { get; set; }
+        public string? Date { get; set; }
         //Foreign Keys
         public int HomeTeamId { get; set; }
         public int AwayTeamId { get; set; }
