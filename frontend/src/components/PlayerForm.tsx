@@ -90,34 +90,43 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ initialData, onSave, isEditMode
         placeholder="Position"
         required
       />
-      <input
-        type="number"
-        name="tries"
-        value={playerData.tries}
-        onChange={handleChange}
-        placeholder="Tries"
-        min={0}
-        required
-      />
-      <input
-        type="number"
-        name="tackles"
-        value={playerData.tackles}
-        onChange={handleChange}
-        placeholder="Tackles"
-        min={0}
-        required
-      />
-      <input
-        type="number"
-        name="carries"
-        value={playerData.carries}
-        onChange={handleChange}
-        placeholder="Carries"
-        min={0}
-        required
-      />
-      
+  
+      <label>
+        Tries:
+        <input
+          type="number"
+          name="tries"
+          value={playerData.tries}
+          onChange={handleChange}
+          min={0}
+          required
+        />
+      </label>
+  
+      <label>
+        Tackles:
+        <input
+          type="number"
+          name="tackles"
+          value={playerData.tackles}
+          onChange={handleChange}
+          min={0}
+          required
+        />
+      </label>
+  
+      <label>
+        Carries:
+        <input
+          type="number"
+          name="carries"
+          value={playerData.carries}
+          onChange={handleChange}
+          min={0}
+          required
+        />
+      </label>
+
       {/* Dropdown to select a team */}
       <select
         name="teamId"

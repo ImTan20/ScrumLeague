@@ -68,7 +68,7 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialData, onSave, isEditMode, 
     onSave(matchData); // Pass data without 'id' for creating or updating
   };
 
-  // Only render the form when teams are loaded to avoid issues with 'unknown' team names
+  // Only render the form when teams are loaded
   if (teams.length === 0) {
     return <div>Loading teams...</div>; // Display a loading state while fetching teams
   }

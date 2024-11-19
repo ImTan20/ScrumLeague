@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { getPlayers, deletePlayer, createPlayer, updatePlayer} from '../services/PlayerService';
-import { Player } from '../types';
+import { getPlayers, deletePlayer, createPlayer, updatePlayer } from '../services/PlayerService';
+import { getTeams } from '../services/TeamService';
+import { Player, Team } from '../types';
 import PlayerForm from './PlayerForm';
-import TeamList from './TeamList';
 import { Link } from 'react-router-dom';
 
 const PlayerList: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
+  const [teams, setTeams] = useState<Team[]>([]); // Store the list of teams
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
 
-  // Fetch players when component mounts
+  // Fetch players and teams when component mounts
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
@@ -21,19 +22,36 @@ const PlayerList: React.FC = () => {
         console.error('Error fetching players:', error);
       }
     };
+
+    const fetchTeams = async () => {
+      try {
+        const teamsData = await getTeams();
+        setTeams(teamsData);
+      } catch (error) {
+        console.error('Error fetching teams:', error);
+      }
+    };
+
     fetchPlayers();
+    fetchTeams();
   }, []);
+
+  // Function to get team name by ID
+  const getTeamNameById = (id: number): string => {
+    const team = teams.find((team) => team.id === id);
+    return team ? team.name : 'Unknown';
+  };
 
   const openCreateForm = () => {
     setIsFormOpen(true);
     setSelectedPlayer(null); // No player selected for create
-    setEditMode(false);  // We're in create mode
+    setEditMode(false); // We're in create mode
   };
 
   const openEditForm = (player: Player) => {
     setIsFormOpen(true);
-    setSelectedPlayer(player);  // Set the player data for editing
-    setEditMode(true);  // We're in edit mode
+    setSelectedPlayer(player); // Set the player data for editing
+    setEditMode(true); // We're in edit mode
   };
 
   const handleSavePlayer = async (playerData: Player) => {
@@ -70,27 +88,29 @@ const PlayerList: React.FC = () => {
     <div>
       <h2>Players List</h2>
       <button onClick={openCreateForm}>Add New Player</button>
-      
+
       {/* Conditionally render PlayerForm for creating or editing */}
       {isFormOpen && (
         <PlayerForm
-          initialData={selectedPlayer}  // Pass selected player for editing (or null for creating)
-          onSave={handleSavePlayer}  // Pass handleSavePlayer to handle both create and update
-          isEditMode={editMode}  // Pass the edit mode flag
+          initialData={selectedPlayer} // Pass selected player for editing (or null for creating)
+          onSave={handleSavePlayer} // Pass handleSavePlayer to handle both create and update
+          isEditMode={editMode} // Pass the edit mode flag
         />
       )}
-      
-      <ul>
-        {players.map((player) => (
-          <li key={player.id}>
-            <Link to={`/stats?playerName=${player.firstName} ${player.lastName}`} className='App-link'>
-              {player.firstName} {player.lastName}
-            </Link>
-            ({player.position})
-            <Link to ="/" className="App-link">{player.teamId}</Link>
 
-            <button onClick={() => openEditForm(player)}>Edit</button>
-            <button onClick={() => handleDeletePlayer(player.id)}>Delete</button>
+      <ul style={{ listStyle: 'none', padding: 0 }}>
+        {players.map((player) => (
+          <li key={player.id} style={{ margin: '10px 0' }}>
+            <Link to={`/stats?playerName=${player.firstName} ${player.lastName}`} className="App-link">
+              {player.firstName} {player.lastName}
+            </Link>{' '}
+            ({player.position}) - {getTeamNameById(player.teamId)}
+            <button onClick={() => openEditForm(player)} style={{ marginLeft: '10px' }}>
+              Edit
+            </button>
+            <button onClick={() => handleDeletePlayer(player.id)} style={{ marginLeft: '5px' }}>
+              Delete
+            </button>
           </li>
         ))}
       </ul>
