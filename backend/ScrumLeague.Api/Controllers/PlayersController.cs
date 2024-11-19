@@ -141,5 +141,37 @@ namespace ScrumLeague.Api.Controllers
 
             return NoContent(); // Successfully deleted
         }
+
+        // GET: api/Players/{id}/stats
+        [HttpGet("{id}/stats")]
+        public async Task<ActionResult<Player>> GetPlayerStats(int id)
+        {
+            try
+            {
+                var player = await _context.Players
+                    .Include(p => p.Team)  // If I include the player's team as well
+                    .FirstOrDefaultAsync(p => p.Id == id);
+
+                if (player == null)
+                {
+                    return NotFound(new { Message = "Player not found" });
+                }
+
+                // Directly return the player's stats
+                var stats = new
+                {
+                    GamesPlayed = player.Team.GamesPlayed,
+                    Tries = player.Tries,
+                    Tackles = player.Tackles,
+                    Carries = player.Carries
+                };
+
+                return Ok(stats);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while fetching the player stats", Error = ex.Message });
+            }
+        }
     }
 }

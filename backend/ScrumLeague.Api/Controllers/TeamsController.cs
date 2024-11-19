@@ -138,5 +138,53 @@ namespace ScrumLeague.Api.Controllers
 
             return NoContent(); // Successfully deleted
         }
+
+        // GET: api/Teams/{id}/stats
+        [HttpGet("{id}/stats")]
+        public async Task<ActionResult> GetTeamStats(int id)
+        {
+            try
+            {
+                var team = await _context.Teams
+                    .Include(t => t.Players)  // Include players to calculate player-based stats
+                    .FirstOrDefaultAsync(t => t.Id == id);
+
+                if (team == null)
+                {
+                    return NotFound(new { Message = "Team not found" });
+                }
+
+                // Calculate player stats (aggregates)
+                var playerStats = new
+                {
+                    TotalTries = team.Players.Sum(p => p.Tries),
+                    TotalTackles = team.Players.Sum(p => p.Tackles),
+                    TotalCarries = team.Players.Sum(p => p.Carries)
+                };
+
+                // Team-specific stats
+                var teamData = new
+                {
+                    Wins = team.Wins,
+                    Losses = team.Losses,
+                    Draws = team.Draws,
+                    Points = team.Points,
+                    GamesPlayed = team.GamesPlayed
+                };
+
+                // Combine both player stats and team data in one response
+                var combinedStats = new
+                {
+                    PlayerStats = playerStats,
+                    TeamStats = teamData
+                };
+
+                return Ok(combinedStats);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while fetching the team stats", Error = ex.Message });
+            }
+        }
     }
 }
