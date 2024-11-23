@@ -28,7 +28,7 @@ const App: React.FC = () => {
             <Link to ="/teams" className="App-link">Teams</Link>
             <Link to ="/matches" className="App-link">Matches</Link>
             <Link to ="/stats" className='App-link'>Stats</Link>
-            <Link to ="/teamSheet" className='App-link'>Team Sheet</Link>
+            <Link to ="/teamsheet" className='App-link'>Team Sheet</Link>
 
           </nav>
         </header>
@@ -41,7 +41,7 @@ const App: React.FC = () => {
             <Route path="/teams" element={<TeamList />} />
             <Route path="/matches" element={<MatchList />} />
             <Route path="/stats" element={<StatsPage />} />
-            <Route path="/teamSheet" element={<TeamSheetPage />} />
+            <Route path="/teamsheet" element={<TeamSheetPage />} />
           </Routes>
         </div>
       </div>
