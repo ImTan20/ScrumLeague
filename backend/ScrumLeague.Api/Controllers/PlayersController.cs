@@ -163,7 +163,16 @@ namespace ScrumLeague.Api.Controllers
                     GamesPlayed = player.Team.GamesPlayed,
                     Tries = player.Tries,
                     Tackles = player.Tackles,
-                    Carries = player.Carries
+                    Carries = player.Carries,
+                    AverageTries = player.Team.GamesPlayed > 0
+                        ? Math.Round(player.Tries / (double)player.Team.GamesPlayed, 2)
+                        : 0,
+                    AverageTackles = player.Team.GamesPlayed > 0
+                        ? Math.Round(player.Tackles / (double)player.Team.GamesPlayed, 2)
+                        : 0,
+                    AverageCarries = player.Team.GamesPlayed > 0
+                        ? Math.Round(player.Carries / (double)player.Team.GamesPlayed, 2)
+                        : 0
                 };
 
                 return Ok(stats);

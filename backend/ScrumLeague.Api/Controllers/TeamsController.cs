@@ -159,7 +159,17 @@ namespace ScrumLeague.Api.Controllers
                 {
                     TotalTries = team.Players.Sum(p => p.Tries),
                     TotalTackles = team.Players.Sum(p => p.Tackles),
-                    TotalCarries = team.Players.Sum(p => p.Carries)
+                    TotalCarries = team.Players.Sum(p => p.Carries),
+                    AverageTries = team.GamesPlayed > 0
+                        ? Math.Round(team.Players.Sum(p => p.Tries) / (double)team.GamesPlayed, 2)
+                        : 0,
+                    AverageTackles = team.GamesPlayed > 0
+                        ? Math.Round(team.Players.Sum(p => p.Tackles) / (double)team.GamesPlayed, 2)
+                        : 0,
+                    AverageCarries = team.GamesPlayed > 0
+                        ? Math.Round(team.Players.Sum(p => p.Carries) / (double)team.GamesPlayed, 2)
+                        : 0,
+                    TopTryScorer = team.Players.OrderByDescending(p => p.Tries).FirstOrDefault()
                 };
 
                 // Team-specific stats
