@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import PlayerStats from './PlayerStats';
@@ -12,17 +12,8 @@ const StatsPage: React.FC = () => {
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [selectedEntity, setSelectedEntity] = useState<{ type: string; id: number } | null>(null);
 
-  // Use URL search params to get the player name or team name if it exists
-  useEffect(() => {
-    const params = new URLSearchParams(search);
-    const Name = params.get('Name'); // Get the player name from the URL query parameters
-    if (Name) {
-      setSearchTerm(Name);
-      handleSearch(Name);   // Automatically trigger the search
-    }
-  }, [search]); // Runs when the search query changes
-
-  const handleSearch = async (term: string) => {
+  // Define the handleSearch function using useCallback
+  const handleSearch = useCallback(async (term: string) => {
     if (!term.trim()) {
       setSearchResults([]); // Clear results if search is empty
       setSelectedEntity(null); // Also clear the selected entity if search is cleared
@@ -47,7 +38,17 @@ const StatsPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  // Use URL search params to get the player name or team name if it exists
+  useEffect(() => {
+    const params = new URLSearchParams(search);
+    const Name = params.get('Name'); // Get the player name from the URL query parameters
+    if (Name) {
+      setSearchTerm(Name);
+      handleSearch(Name);   // Automatically trigger the search
+    }
+  }, [search, handleSearch]); // Add handleSearch to the dependency array
 
   const handleSelectEntity = (type: string, entity: any) => {
     setSelectedEntity({ type, id: entity.id });
