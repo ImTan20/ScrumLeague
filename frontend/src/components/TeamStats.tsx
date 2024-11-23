@@ -126,7 +126,7 @@ const TeamStats: React.FC<TeamStatsProps> = ({ teamId }) => {
       },
       title: {
         display: true,
-        text: 'Team Performance Stats',
+        text: 'Combined Player Stats',
       },
     },
     scales: {
@@ -145,7 +145,7 @@ const TeamStats: React.FC<TeamStatsProps> = ({ teamId }) => {
       },
       title: {
         display: true,
-        text: 'Combined Player Stats',
+        text: 'Team Performance Stats',
       },
     },
   };

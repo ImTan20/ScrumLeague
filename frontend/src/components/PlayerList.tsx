@@ -101,7 +101,7 @@ const PlayerList: React.FC = () => {
       <ul style={{ listStyle: 'none', padding: 0 }}>
         {players.map((player) => (
           <li key={player.id} style={{ margin: '10px 0' }}>
-            <Link to={`/stats?playerName=${player.firstName} ${player.lastName}`} className="App-link">
+            <Link to={`/stats?Name=${player.firstName} ${player.lastName}`} className="App-link">
               {player.firstName} {player.lastName}
             </Link>{' '}
             ({player.position}) - {getTeamNameById(player.teamId)}

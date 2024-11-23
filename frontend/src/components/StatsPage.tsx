@@ -15,10 +15,10 @@ const StatsPage: React.FC = () => {
   // Use URL search params to get the player name or team name if it exists
   useEffect(() => {
     const params = new URLSearchParams(search);
-    const playerName = params.get('playerName'); // Get the player name from the URL query parameters
-    if (playerName) {
-      setSearchTerm(playerName);
-      handleSearch(playerName);   // Automatically trigger the search
+    const Name = params.get('Name'); // Get the player name from the URL query parameters
+    if (Name) {
+      setSearchTerm(Name);
+      handleSearch(Name);   // Automatically trigger the search
     }
   }, [search]); // Runs when the search query changes
 

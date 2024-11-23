@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getTeams, deleteTeam, createTeam, updateTeam } from '../services/TeamService';
 import { Team } from '../types';
 import TeamForm from './TeamForm'; 
+import { Link } from 'react-router-dom';
 
 const TeamList: React.FC = () => {
     const [teams, setTeams] = useState<Team[]>([]);
@@ -90,7 +91,10 @@ const TeamList: React.FC = () => {
             <ul>
                 {teams.map((team) => (
                     <li key={team.id}>
-                        {team.name} (Coach: {team.coach})
+                        <Link to={`/stats?Name=${team.name}`} className="App-link">
+                            {team.name}
+                        </Link>
+                        (Coach: {team.coach})
                         <button onClick={() => openEditForm(team)}>Edit</button>
                         <button onClick={() => handleDeleteTeam(team.id)}>Delete</button>
                     </li>
