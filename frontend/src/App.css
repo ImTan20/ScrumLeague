@@ -1,10 +1,53 @@
 .App {
-  text-align: center;
+  font-family: Arial, sans-serif; /* Set a font for the app */
+}
+
+.App-header {
+  background-color: #eaebe3;
+  display: flex;
+  justify-content: space-between; /* Space between logo and nav */
+  align-items: center;
+  padding: 10px;
+  color: white;
+  position: relative; /* Needed for absolute positioning of nav links */
 }
 
 .App-logo {
-  height: 40vmin;
+  max-width: 150px;
+  max-height: 150px;
+  width: auto;
+  height: auto;
   pointer-events: none;
+  margin-right: 20px;
+}
+
+.App-nav {
+  display: flex;
+  justify-content: center; /* Centers the nav items horizontally */
+  align-items: center; /* Vertically aligns the nav items */
+  position: absolute; /* Absolute positioning so it can be centered */
+  left: 50%; /* Position it at the center of the header */
+  transform: translateX(-50%); /* Adjust the position to be exactly centered */
+  width: 100%; /* Ensures it spans the full width */
+}
+
+.App-link {
+  color: #000000; /* font colour for nav links */
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 10px; /* Adds spacing between links */
+}
+
+.App-link:hover {
+  color: #4a4d4f; /* Hover link text to grey*/
+  text-decoration: underline;
+}
+
+.App-main {
+  padding: 20px;
+  text-align: center;
+  font-size: calc(10px + 2vmin);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -13,26 +56,21 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.stats-page {
+  text-align: center;
 }
 
-.App-link {
-  color: #61dafb;
+.stats-toggle {
+  margin: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.stats-select {
+  margin: 10px;
+}
+
+/* Remove bullet points from all lists */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
