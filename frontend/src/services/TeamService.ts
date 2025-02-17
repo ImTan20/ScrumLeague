@@ -6,13 +6,21 @@ const API_URL = 'http://localhost:5000/api/teams';
 // CRUD Operations
 export const getTeams = async (): Promise<Team[]> => {
     try {
-        const response = await axios.get(API_URL); // No need for /teams since API_URL already includes it
-        return response.data;
+        const response = await axios.get(API_URL);
+        // Ensure the data is in the expected format
+        if (response.data && Array.isArray(response.data.$values)) {
+            return response.data.$values;
+        } else {
+            console.error('Teams data is not in the expected format:', response.data);
+            return []; // Return an empty array if the format is unexpected
+        }
     } catch (error) {
         console.error('Error fetching teams:', error);
-        throw error;
+        return []; // Return an empty array in case of error
     }
 };
+
+
 
 export const createTeam = async (teamData: Omit<Team, 'id'>): Promise<Team> => {
     try {

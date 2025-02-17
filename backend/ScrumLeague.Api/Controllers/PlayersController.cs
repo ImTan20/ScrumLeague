@@ -54,6 +54,29 @@ namespace ScrumLeague.Api.Controllers
                 return StatusCode(500, new { Message = "An error occurred while fetching the player", Error = ex.Message });
             }
         }
+        //Get Players on a team
+        [HttpGet("team/{teamId}")]
+        public async Task<ActionResult<IEnumerable<Player>>> GetPlayersByTeam(int teamId)
+        {
+            try
+            {
+                var players = await _context.Players
+                    .Where(p => p.TeamId == teamId)
+                    .ToListAsync();
+
+                if (!players.Any())
+                {
+                    return NotFound(new { Message = "No players found for this team." });
+                }
+
+                return Ok(players);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while fetching players.", Error = ex.Message });
+            }
+        }
+
 
         // POST: api/Players
         [HttpPost]

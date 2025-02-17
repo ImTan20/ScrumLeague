@@ -4,10 +4,35 @@ import { Player } from '../types';
 const API_URL = 'http://localhost:5000/api/players';
 
 // CRUD Operations
-export const getPlayers = async (): Promise<Player[]> => {
+
+// Define the structure of the API response
+interface ApiResponse {
+    $values: Player[];  // The field containing the array of players
+  }
+  
+  export const getPlayers = async (): Promise<Player[]> => {
     try {
-        const response = await axios.get(API_URL); // No additional /players
-        return response.data;
+      const response = await axios.get<ApiResponse>(API_URL);  // We use ApiResponse as the expected type
+      return response.data.$values;  // Access the $values field in the response
+    } catch (error) {
+      console.error('Error fetching players:', error);
+      throw new Error('Error fetching players');
+    }
+  };
+
+
+  export const getPlayersByTeam = async (teamId: number): Promise<Player[]> => {
+    try {
+        const response = await axios.get(`${API_URL}?teamId=${teamId}`);
+        const data = response.data;
+
+        // Check if $values exists, then return the array inside $values
+        if (data && data.$values) {
+            return data.$values.filter((player: Player) => player.teamId === teamId); // Filter players by teamId
+        }
+
+        // If no $values, just return the data directly (in case it's a direct array of players)
+        return data;
     } catch (error) {
         console.error('Error fetching players:', error);
         throw error;

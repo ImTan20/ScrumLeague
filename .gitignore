@@ -19,3 +19,12 @@ bin/
 
 # Ignore obj folder
 obj/
+
+# Ignore all JSON files
+*.json
+
+# But keep essential configuration files
+!appsettings.json
+!appsettings.*.json
+!package.json
+!package-lock.json

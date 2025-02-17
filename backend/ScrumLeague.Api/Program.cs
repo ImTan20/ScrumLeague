@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ScrumLeague.Data;
 using ScrumLeague.Models;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +9,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(); // Register Swagger generator for API documentation
 
-// Add controllers (needed for API endpoints)
-builder.Services.AddControllers();
+// Add controllers and configure JSON to use camelCase
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        // Use camelCase property names for JSON
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+
+        // Handle object cycles by using ReferenceHandler.Preserve
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+    });
 
 // Configure DbContext with SQL Server connection string
 builder.Services.AddDbContext<ScrumLeagueDbContext>(options =>
@@ -21,7 +30,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigins",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000") // replaced with actual frontend URL
+            policy.WithOrigins("http://localhost:3000") // replace with actual frontend URL
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
@@ -44,7 +53,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Enable CORS with the specified policy
-app.UseCors("AllowSpecificOrigins"); // Apply the CORS policy
+app.UseCors("AllowSpecificOrigins");
 
 // Map controllers for API routes, routing middleware
 app.MapControllers();
