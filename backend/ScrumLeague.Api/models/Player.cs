@@ -24,6 +24,8 @@ namespace ScrumLeague.Models
         //Navigation Property
         [JsonIgnore]
         public Team? Team { get; set; }
+        [JsonIgnore]
+        public List<TeamsheetPlayer>? TeamsheetPlayers { get; set; } = new List<TeamsheetPlayer>();
     }
 }
 

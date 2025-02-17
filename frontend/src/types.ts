@@ -12,6 +12,7 @@ export interface Team {
 
 export interface Player {
     id: number;
+    name: string;
     firstName: string;
     lastName: string;
     position: string;
@@ -30,3 +31,17 @@ export interface Match {
     awayScore: number;
     result: string;
 }
+
+export interface Teamsheet {
+    id: number;
+    teamId: number;
+    team: any;
+    players: TeamsheetPlayer[];
+  }
+  
+  export interface TeamsheetPlayer {
+    id?: number;
+    teamId: number;
+    playerId: number;
+    assignedPosition: string;
+  }

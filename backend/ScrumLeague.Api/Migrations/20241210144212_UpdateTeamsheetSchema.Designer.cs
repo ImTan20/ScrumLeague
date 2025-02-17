@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ScrumLeague.Data;
 
@@ -11,9 +12,11 @@ using ScrumLeague.Data;
 namespace ScrumLeague.Api.Migrations
 {
     [DbContext(typeof(ScrumLeagueDbContext))]
-    partial class ScrumLeagueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241210144212_UpdateTeamsheetSchema")]
+    partial class UpdateTeamsheetSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +54,7 @@ namespace ScrumLeague.Api.Migrations
 
                     b.HasIndex("HomeTeamId");
 
-                    b.ToTable("Matches", (string)null);
+                    b.ToTable("Matches");
                 });
 
             modelBuilder.Entity("ScrumLeague.Models.Player", b =>
@@ -93,7 +96,7 @@ namespace ScrumLeague.Api.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Players", (string)null);
+                    b.ToTable("Players");
                 });
 
             modelBuilder.Entity("ScrumLeague.Models.Team", b =>
@@ -129,7 +132,7 @@ namespace ScrumLeague.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teams", (string)null);
+                    b.ToTable("Teams");
                 });
 
             modelBuilder.Entity("ScrumLeague.Models.Teamsheet", b =>
@@ -147,7 +150,7 @@ namespace ScrumLeague.Api.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Teamsheets", (string)null);
+                    b.ToTable("Teamsheets");
                 });
 
             modelBuilder.Entity("ScrumLeague.Models.TeamsheetPlayer", b =>
@@ -176,7 +179,7 @@ namespace ScrumLeague.Api.Migrations
 
                     b.HasIndex("TeamsheetId");
 
-                    b.ToTable("TeamsheetPlayer", (string)null);
+                    b.ToTable("TeamsheetPlayer");
                 });
 
             modelBuilder.Entity("ScrumLeague.Models.Match", b =>

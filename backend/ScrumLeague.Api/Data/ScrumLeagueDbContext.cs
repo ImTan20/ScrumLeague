@@ -14,8 +14,10 @@ namespace ScrumLeague.Data
 		public DbSet<Team> Teams { get; set; }
 		public DbSet<Player> Players { get; set; }
 		public DbSet<Match> Matches { get; set; }
+        public DbSet<Teamsheet> Teamsheets { get; set; }
+		public DbSet<TeamsheetPlayer> TeamsheetPlayer { get; set; } 
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
             // Configure the relationship between Match and Team (HomeTeam)
             modelBuilder.Entity<Match>()
@@ -31,7 +33,7 @@ namespace ScrumLeague.Data
 				.HasForeignKey(m => m.AwayTeamId)  // AwayTeamId is the foreign key in Match
 				.OnDelete(DeleteBehavior.Restrict); // Prevents cascading delete for awayteamid
 
-			base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
 		}
 	}
 }
