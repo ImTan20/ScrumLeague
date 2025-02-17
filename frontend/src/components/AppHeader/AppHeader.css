@@ -1,0 +1,18 @@
+.app-header {
+    background-color: #eaebe3 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 10px !important;
+    color: white !important;
+    position: relative !important;
+  }
+
+  .app-logo {
+    height: 40px !important;
+    margin-right: 20px !important;
+  }
+  .app-menu {
+    flex: 1 !important;
+    background: #eaebe3 !important;
+  }
