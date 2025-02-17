@@ -21,15 +21,15 @@ const TeamsheetPage: React.FC<TeamsheetPageProps> = ({ switchToList, editingTeam
     );
     const [teamsheet, setTeamsheet] = useState<{ playerId: number; assignedPosition: string }[]>([]
     );
-    const [positions, setPositions] = useState<string[]>([
+    const positions: string[] = [
         "FULL BACK(1)", "RIGHT WING(2)", "RIGHT CENTRE(3)", "LEFT CENTRE(4)", "LEFT WING(5)",
         "STAND OFF(6)", "SCRUM HALF(7)", "PROP(8)", "HOOKER(9)", "PROP(10)",
         "SECOND ROW(11)", "SECOND ROW(12)", "LOOSE FORWARD(13)",
-    ]);
+    ];
 
-    const [interchangePositions, setInterchangePositions] = useState<string[]>([
+    const interchangePositions: string[] = [
         "INTERCHANGE(14)", "INTERCHANGE(15)", "INTERCHANGE(16)", "INTERCHANGE(17)"
-    ]);
+    ];
 
     const [visiblePlayers, setVisiblePlayers] = useState<Set<number>>(new Set());
 
@@ -238,6 +238,7 @@ const TeamsheetPage: React.FC<TeamsheetPageProps> = ({ switchToList, editingTeam
                 </div>
             </div>
 
+            {/* Save Button */}
             <CustomButton type="save" label="Save Teamsheet" onClick={saveTeamsheet} disabled={!selectedTeam || teamsheet?.length === 0} />
         </div>
     );

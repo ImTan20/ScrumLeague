@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import PlayerStats from './PlayerStats';
 import TeamStats from './TeamStats';
-import { Typography, AutoComplete, Input, Spin } from 'antd';
+import { Typography, AutoComplete, Input } from 'antd';
 import './Stats.css';
 
 const { Title } = Typography;

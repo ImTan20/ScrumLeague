@@ -1,21 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Carousel } from 'antd';
 import './HomePage.css';
 import { Button } from "antd";
-import { HomeOutlined, TeamOutlined, UserOutlined, BarChartOutlined, FileTextOutlined, CalendarOutlined } from "@ant-design/icons";
+import { TeamOutlined, UserOutlined, BarChartOutlined, FileTextOutlined, CalendarOutlined } from "@ant-design/icons";
 import { useNavigate } from 'react-router-dom';
 
 const HomePage: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const totalSlides = 5;
   const autoplaySpeed = 6000; // 6 seconds
   const navigate = useNavigate();
-
-  // Update the current slide index on carousel change
-  const handleChange = (currentSlide: number) => {
-    setCurrentIndex(currentSlide);
-  };
 
   return (
     <div>
@@ -23,15 +15,14 @@ const HomePage: React.FC = () => {
         autoplay
         dotPosition="bottom"
         autoplaySpeed={autoplaySpeed}
-        afterChange={handleChange}
         dots
         pauseOnHover={false}
       >
         <div className="carousel-slide">
           <img
             src={`${process.env.PUBLIC_URL}/stadium.jpg`}
-            alt="Cover Image 1"
-            className="carousel-image"
+            alt="Cover 1"
+            className="carousel-pic"
           />
           <div className="carousel-text">
             <h2>Welcome to the Scrum League!</h2>
@@ -41,8 +32,8 @@ const HomePage: React.FC = () => {
         <div className="carousel-slide">
           <img
             src={`${process.env.PUBLIC_URL}/rugbyhuddle.jpg`}
-            alt="Cover Image 2"
-            className="carousel-image"
+            alt="Cover 2"
+            className="carousel-pic"
           />
           <div className="carousel-text">
             <h2>Join the Game!</h2>
@@ -54,8 +45,8 @@ const HomePage: React.FC = () => {
         <div className="carousel-slide">
           <img
             src={`${process.env.PUBLIC_URL}/rugbyball.jpg`}
-            alt="Cover Image 3"
-            className="carousel-image"
+            alt="Cover 3"
+            className="carousel-pic"
           />
           <div className="carousel-text">
             <h2>Keep up to Date!</h2>
@@ -66,8 +57,8 @@ const HomePage: React.FC = () => {
         <div className="carousel-slide">
           <img
             src={`${process.env.PUBLIC_URL}/laptop.jpg`}
-            alt="Cover Image 4"
-            className="carousel-image"
+            alt="Cover 4"
+            className="carousel-pic"
           />
           <div className="carousel-text">
             <h2>Track your Stats!</h2>
@@ -78,8 +69,8 @@ const HomePage: React.FC = () => {
         <div className="carousel-slide">
           <img
             src={`${process.env.PUBLIC_URL}/rugbygame.jpg`}
-            alt="Cover Image 5"
-            className="carousel-image"
+            alt="Cover 5"
+            className="carousel-pic"
           />
           <div className="carousel-text">
             <h2>Build your Teamsheet!</h2>

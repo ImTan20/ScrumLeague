@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PlayerList from './components/Players/PlayerList';
 import TeamList from './components/Teams/TeamList';
 import MatchList from './components/Matches/MatchList';

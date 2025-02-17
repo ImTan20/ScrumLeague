@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Team } from '../../types';
 import CustomButton from '../Custombutton/CustomButton';
-import { Modal, Form, Input, InputNumber, Button } from 'antd';
+import { Modal, Form, Input, InputNumber } from 'antd';
 
 interface TeamFormProps {
     initialData: Team | null;

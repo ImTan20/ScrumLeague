@@ -16,7 +16,7 @@ const MatchList: React.FC = () => {
   const [editMode, setEditMode] = useState(false);
   const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+
 
   // Fetch matches and teams when component mounts
   useEffect(() => {
@@ -27,7 +27,7 @@ const MatchList: React.FC = () => {
         setTeams(teamsData);
         setLoading(false);
       } catch (error) {
-        setError('Error fetching data');
+        message.error("Error fetching data.");
       }
       finally {
         setLoading(false);
@@ -68,7 +68,6 @@ const MatchList: React.FC = () => {
       setEditMode(false);
       setSelectedMatch(null);
     } catch (error) {
-      setError('Error saving match');
       message.error("Failed to Save Match.");
     }
   };
@@ -85,7 +84,6 @@ const MatchList: React.FC = () => {
       message.success("Match Deleted!");
       setMatches((prevMatches) => prevMatches.filter((match) => match.id !== id));
     } catch (error) {
-      setError('Error deleting match');
       message.error("Failed to Delete Match.");
     }
   };
