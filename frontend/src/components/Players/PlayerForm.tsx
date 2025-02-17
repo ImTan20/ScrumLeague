@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Input, Form, Select, Button } from "antd";
+import { Modal, Input, Form, Select } from "antd";
 import { Player, Team } from "../../types";
 import { getTeams } from "../../services/TeamService";
 import CustomButton from "../Custombutton/CustomButton";
