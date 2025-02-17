@@ -117,7 +117,7 @@ namespace ScrumLeague.Api.Controllers
                         Losses = team.Losses,
                         Draws = team.Draws,
                         Points = team.Points,
-                        Players = team.Players.Select(p => new
+                        Players = (team.Players ?? new List<Player>()).Select(p => new
                         {
                             p.Id,
                             Name = p.FirstName + " " + p.LastName

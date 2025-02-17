@@ -180,21 +180,23 @@ namespace ScrumLeague.Api.Controllers
                     return NotFound(new { Message = "Player not found" });
                 }
 
+                // Ensure player's team is not null before accessing its properties
+                var gamesPlayed = player.Team?.GamesPlayed ?? 0;
                 // Directly return the player's stats
                 var stats = new
                 {
-                    GamesPlayed = player.Team.GamesPlayed,
+                    GamesPlayed = gamesPlayed,
                     Tries = player.Tries,
                     Tackles = player.Tackles,
                     Carries = player.Carries,
-                    AverageTries = player.Team.GamesPlayed > 0
-                        ? Math.Round(player.Tries / (double)player.Team.GamesPlayed, 2)
+                    AverageTries = gamesPlayed > 0
+                        ? Math.Round(player.Tries / (double)gamesPlayed, 2)
                         : 0,
-                    AverageTackles = player.Team.GamesPlayed > 0
-                        ? Math.Round(player.Tackles / (double)player.Team.GamesPlayed, 2)
+                    AverageTackles = gamesPlayed > 0
+                        ? Math.Round(player.Tackles / (double)gamesPlayed, 2)
                         : 0,
-                    AverageCarries = player.Team.GamesPlayed > 0
-                        ? Math.Round(player.Carries / (double)player.Team.GamesPlayed, 2)
+                    AverageCarries = gamesPlayed > 0
+                        ? Math.Round(player.Carries / (double)gamesPlayed, 2)
                         : 0
                 };
 
