@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Bar, Pie } from 'react-chartjs-2'; // Import Bar and Pie charts
+import { Bar, Pie } from 'react-chartjs-2';
+import { Card, Typography, List } from 'antd';
 import {
   Chart as ChartJS,
   BarElement,
@@ -10,7 +11,7 @@ import {
   Tooltip,
   Legend,
   ArcElement,
-} from 'chart.js'; // Import necessary Chart.js modules
+} from 'chart.js';
 
 // Register Chart.js modules
 ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend, ArcElement);
@@ -96,23 +97,23 @@ const TeamStats: React.FC<TeamStatsProps> = ({ teamId }) => {
         borderWidth: 1,
       },
       {
-      label: 'Average Stats Per Game',
-      data: [
-        teamData.playerStats.averageTries,
-        teamData.playerStats.averageTackles,
-        teamData.playerStats.averageCarries
-      ],
-      backgroundColor:[
-        'rgba(75, 192, 192, 0.3)',
-        'rgba(54, 162, 235, 0.3)',
-        'rgba(255, 206, 86, 0.3)'
-      ],
-      borderColor: [
-        'rgba(75, 192, 192, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)'
-      ],
-      borderWidth: 1,
+        label: 'Average Stats Per Game',
+        data: [
+          teamData.playerStats.averageTries,
+          teamData.playerStats.averageTackles,
+          teamData.playerStats.averageCarries
+        ],
+        backgroundColor: [
+          'rgba(75, 192, 192, 0.3)',
+          'rgba(54, 162, 235, 0.3)',
+          'rgba(255, 206, 86, 0.3)'
+        ],
+        borderColor: [
+          'rgba(75, 192, 192, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)'
+        ],
+        borderWidth: 1,
       },
     ],
   };
@@ -152,24 +153,57 @@ const TeamStats: React.FC<TeamStatsProps> = ({ teamId }) => {
 
   return (
     <div>
-      <h2>Team Stats</h2>
-      <p>Wins: {teamData.teamStats.wins}</p>
-      <p>Losses: {teamData.teamStats.losses}</p>
-      <p>Draws: {teamData.teamStats.draws}</p>
-      <p>Points: {teamData.teamStats.points}</p>
-      <p>Games Played: {teamData.teamStats.gamesPlayed}</p>
-      <h4>Top Try Scorer </h4>
-      <p>{teamData.playerStats.topTryScorer.firstName} {teamData.playerStats.topTryScorer.lastName}: {teamData.playerStats.topTryScorer.tries}</p>
-      
-      {/* Pie Chart for Team Stats */}
-      <Pie data={teamStatsData} options={pieChartOptions} />
-      <h3>Combined Player Stats</h3>
-      <p>Total Tries: {teamData.playerStats.totalTries} ({teamData.playerStats.averageTries} Per Game)</p>
-      <p>Total Tackles: {teamData.playerStats.totalTackles} ({teamData.playerStats.averageTackles} Per Game)</p>
-      <p>Total Carries: {teamData.playerStats.totalCarries} ({teamData.playerStats.averageCarries} Per Game)</p>
+      <Typography.Title className='stats-title' level={3}>Team Statistics</Typography.Title>
+      <div className="stats-container">
+        <Card title="Team Stats" className="stats-card">
+          <List
+            itemLayout="horizontal"
+            dataSource={[
+              { title: 'Top Try Scorer', value: `${teamData.playerStats.topTryScorer?.firstName ?? 'N/A'} ${teamData.playerStats.topTryScorer?.lastName ?? ''}: ${teamData.playerStats.topTryScorer?.tries ?? 0}` },
+              { title: 'Wins', value: teamData.teamStats.wins },
+              { title: 'Losses', value: teamData.teamStats.losses },
+              { title: 'Draws', value: teamData.teamStats.draws },
+              { title: 'Points', value: teamData.teamStats.points },
+              { title: 'Games Played', value: teamData.teamStats.gamesPlayed },
 
-      {/* Bar graph for Combined Player Stats */}
-      <Bar data={combinedPlayerStatsData} options={barChartOptions} />
+            ]}
+            renderItem={(item) => (
+              <List.Item>
+                <List.Item.Meta title={item.title} description={item.value} />
+              </List.Item>
+            )}
+          />
+        </Card>
+        {/* Pie Chart for Team Stats */}
+        <div className="stats-graph">
+          <Pie data={teamStatsData} options={pieChartOptions} />
+        </div>
+      </div>
+
+      <Typography.Title className='stats-title' level={3}>Combined Player Statistics</Typography.Title>
+
+      <div className="stats-container">
+        {/* Player Stats Card */}
+        <Card title="Player Stats" className="stats-card">
+          <List
+            itemLayout="horizontal"
+            dataSource={[
+              { title: 'Total Tries', value: `${teamData.playerStats.totalTries} (${teamData.playerStats.averageTries} Per Game)` },
+              { title: 'Total Tackles', value: `${teamData.playerStats.totalTackles} (${teamData.playerStats.averageTackles} Per Game)` },
+              { title: 'Total Carries', value: `${teamData.playerStats.totalCarries} (${teamData.playerStats.averageCarries} Per Game)` },
+            ]}
+            renderItem={(item) => (
+              <List.Item>
+                <List.Item.Meta title={item.title} description={item.value} />
+              </List.Item>
+            )}
+          />
+        </Card>
+        {/* Bar graph for Combined Player Stats */}
+        <div className="stats-graph">
+          <Bar data={combinedPlayerStatsData} options={barChartOptions} />
+        </div>
+      </div>
     </div>
   );
 };

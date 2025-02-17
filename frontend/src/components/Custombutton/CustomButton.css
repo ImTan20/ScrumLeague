@@ -1,0 +1,70 @@
+.custom-btn {
+    font-size: 16px  !important;
+    border-radius: 5px  !important;
+    padding: 8px 16px  !important;
+    transition: all 0.3s ease-in-out  !important;
+  }
+  
+  /* Add Button */
+  .add-btn {
+    background-color: #52c41a  !important;
+    color: white  !important;
+    border: none  !important;
+  }
+  .add-btn:hover {
+    background-color: #389e0d  !important;
+  }
+  
+  /* Edit Button */
+  .edit-btn {
+    background-color: white  !important;
+    color: #1677ff  !important;
+    border-color: #1677ff !important;
+  }
+  .edit-btn:hover {
+    background-color: #f1f3f4 !important;
+    color: #0958d9 !important;
+    border-color: #0958d9 !important;
+  }
+  
+  /* Delete Button */
+  .delete-btn {
+    background-color: #ff4d4f !important;
+    color: white !important;
+    border: none !important;
+
+  }
+  .delete-btn:hover {
+    background-color: #d9363e !important;
+  }
+  
+  /* View Button */
+  .view-btn {
+    background-color: white !important;
+    color: black !important;
+    border-color: black !important;
+  }
+  .view-btn:hover {
+    background-color: #f1f3f4 !important;
+  }
+  
+  /* Create/Save Button */
+  .save-btn {
+    background-color: default !important;
+    color: white !important;
+    border: none !important;
+    margin-top: 10px;
+  }
+  .save-btn:hover {
+    background-color: #0958d9 !important;
+  }
+  .cancel-btn {
+    background-color: white !important ;
+    color: #1677ff !important ;
+    border-color: #1677ff !important;
+  }
+  .cancel-btn:hover {
+    background-color: #f1f3f4 !important ;
+    color: #0958d9 !important;
+    border-color: #0958d9 !important;
+  }

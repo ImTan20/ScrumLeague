@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Bar } from 'react-chartjs-2'; // Import Bar chart
-import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from 'chart.js'; // Import necessary Chart.js modules
-
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from 'chart.js';
+import { Card, Col, List, Row, Typography, message } from 'antd';
+import './Stats.css';
 // Register the required modules for Chart.js
 ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
 
@@ -36,7 +37,7 @@ const PlayerStats: React.FC<PlayerStatsProps> = ({ playerId }) => {
   if (loading) return <div>Loading player stats...</div>;
   if (error) return <div>{error}</div>;
   if (!playerData) return <div>No data available</div>;
-  
+
   // Prepare graph data
   const playerStatsData = {
     labels: ['Tries', 'Tackles', 'Carries'], // X-axis labels
@@ -68,7 +69,7 @@ const PlayerStats: React.FC<PlayerStatsProps> = ({ playerId }) => {
           'rgba(54, 162, 235, 0.3)',
           'rgba(255, 206, 86, 0.3)'
         ],
-        borderColor:[
+        borderColor: [
           'rgba(75, 192, 192, 1)',
           'rgba(54, 162, 235, 1)',
           'rgba(255, 206, 86, 1)'
@@ -80,10 +81,11 @@ const PlayerStats: React.FC<PlayerStatsProps> = ({ playerId }) => {
 
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: true,
-        position: 'top' as const, // Legend position
+        position: 'top' as const,
       },
       title: {
         display: true,
@@ -96,17 +98,36 @@ const PlayerStats: React.FC<PlayerStatsProps> = ({ playerId }) => {
       },
     },
   };
-  
+  // Player Card Stats
+  const stats = [
+    { title: 'Games Played', value: playerData.gamesPlayed },
+    { title: 'Tries', value: `${playerData.tries} (${playerData.averageTries} Per Game)` },
+    { title: 'Tackles', value: `${playerData.tackles} (${playerData.averageTackles} Per Game)` },
+    { title: 'Carries', value: `${playerData.carries} (${playerData.averageCarries} Per Game)` }
+  ];
+
   return (
     <div>
-      <h2>Individual Player Stats</h2>
-      <p>Games Played: {playerData.gamesPlayed}</p>
-      <p>Tries: {playerData.tries} ({playerData.averageTries} Per Game)</p>
-      <p>Tackles: {playerData.tackles} ({playerData.averageTackles} Per Game)</p>
-      <p>Carries: {playerData.carries} ({playerData.averageCarries} Per Game)</p>
+      <Typography.Title className='stats-title' level={3}>Individual Player Stats</Typography.Title>
+      <div className='stats-container'>
+        {/* Stats Card */}
+        <Card title="Player Statistics" className='stats-card'>
+          <List
+            itemLayout="horizontal"
+            dataSource={stats}
+            renderItem={(item) => (
+              <List.Item style={{ padding: '4px 0' }}>
+                <List.Item.Meta title={item.title} description={item.value} />
+              </List.Item>
+            )}
+          />
+        </Card>
 
-      {/* Bar graph for Player Stats*/}
-      <Bar data={playerStatsData} options={chartOptions} />
+        {/* Bar Graph */}
+        <div className='stats-graph'>
+          <Bar data={playerStatsData} options={chartOptions} />
+        </div>
+      </div>
     </div>
   );
 };

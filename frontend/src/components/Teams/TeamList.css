@@ -1,0 +1,17 @@
+.team-link {
+    color: #000000;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 10px;
+  }
+  
+  .team-link:hover {
+    color: #4a4d4f;
+    text-decoration: underline;
+  }
+  .add-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+  }
