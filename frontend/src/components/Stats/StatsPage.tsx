@@ -31,7 +31,7 @@ const StatsPage: React.FC = () => {
     setError(null);
 
     try {
-      const response = await axios.get(`http://localhost:5000/api/Search?query=${term}`);
+      const response = await axios.get(`https://scrumleague.azurewebsites.net/api/Search?query=${term}`);
       const data = response.data['$values'];
 
       const results = data.filter((result: any) =>

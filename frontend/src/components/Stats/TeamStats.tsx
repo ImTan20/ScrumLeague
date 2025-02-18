@@ -31,7 +31,7 @@ const TeamStats: React.FC<TeamStatsProps> = ({ teamId }) => {
       setError(null);
 
       axios
-        .get(`http://localhost:5000/api/teams/${teamId}/stats`)
+        .get(`https://scrumleague.azurewebsites.net/api/teams/${teamId}/stats`)
         .then((response) => {
           setTeamData(response.data);
           setLoading(false);

@@ -20,11 +20,12 @@ bin/
 # Ignore obj folder
 obj/
 
-# Ignore all JSON files
-*.json
+# Ignore appsettings.json and other sensitive config files
+appsettings.json
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
 
-# But keep essential configuration files
-!appsettings.json
-!appsettings.*.json
+# But keep essential JSON config files
 !package.json
 !package-lock.json

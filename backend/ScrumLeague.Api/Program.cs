@@ -30,7 +30,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigins",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000") // replace with actual frontend URL
+            policy.WithOrigins("https://scrumleague.netlify.app/") // replace with actual frontend URL
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });

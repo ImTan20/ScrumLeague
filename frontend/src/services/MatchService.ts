@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Match } from '../types';
 
-const API_URL = 'http://localhost:5000/api/matches';
+const API_URL = 'https://scrumleague.azurewebsites.net/api/matches';
 
 // CRUD Operations
 

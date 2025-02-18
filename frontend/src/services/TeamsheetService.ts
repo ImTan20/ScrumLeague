@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Teamsheet } from '../types';
 
-const API_URL = 'http://localhost:5000/api/teamsheets';
+const API_URL = 'https://scrumleague.azurewebsites.net/api/teamsheets';
 
 interface ApiResponse {
   $values: Teamsheet[];  // The array of players

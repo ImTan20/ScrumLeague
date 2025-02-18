@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Team } from '../types';
 
-const API_URL = 'http://localhost:5000/api/teams';
+const API_URL = 'https://scrumleague.azurewebsites.net/api/teams';
 
 // CRUD Operations
 export const getTeams = async (): Promise<Team[]> => {
@@ -12,11 +12,11 @@ export const getTeams = async (): Promise<Team[]> => {
             return response.data.$values;
         } else {
             console.error('Teams data is not in the expected format:', response.data);
-            return []; // Return an empty array if the format is unexpected
+            return [];
         }
     } catch (error) {
         console.error('Error fetching teams:', error);
-        return []; // Return an empty array in case of error
+        return [];
     }
 };
 
