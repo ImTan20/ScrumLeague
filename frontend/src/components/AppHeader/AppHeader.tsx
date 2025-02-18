@@ -49,7 +49,7 @@ const AppHeader: React.FC = () => {
           <Link to="/matches">Matches</Link>
         </Menu.Item>
         <Menu.Item key="/stats" icon={<BarChartOutlined />}>
-          <Link to="/stats">Stats</Link>
+          <Link to="/stats">Statistics</Link>
         </Menu.Item>
         <Menu.Item key="/teamsheet" icon={<FileTextOutlined />}>
           <Link to="/teamsheet">Team Sheet</Link>

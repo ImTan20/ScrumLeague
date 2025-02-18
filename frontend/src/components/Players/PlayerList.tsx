@@ -135,7 +135,7 @@ const PlayerList: React.FC = () => {
   ];
 
   return (
-    <div>
+    <div className="app-content">
       <Title className="" level={2}>Players</Title>
       <div className="add-button-container" >
         <CustomButton type="add" label="Add New Player" onClick={openCreateForm} />

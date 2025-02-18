@@ -6,6 +6,7 @@ import { Team, Player, Teamsheet } from '../../types';
 import './TeamsheetPage.css'; // For custom drag-and-drop styling
 import { message, Select, Typography, Card } from "antd";
 import CustomButton from '../Custombutton/CustomButton';
+import { starterPositions, interchangePositions } from "../../constants";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -21,15 +22,6 @@ const TeamsheetPage: React.FC<TeamsheetPageProps> = ({ switchToList, editingTeam
     );
     const [teamsheet, setTeamsheet] = useState<{ playerId: number; assignedPosition: string }[]>([]
     );
-    const positions: string[] = [
-        "FULL BACK(1)", "RIGHT WING(2)", "RIGHT CENTRE(3)", "LEFT CENTRE(4)", "LEFT WING(5)",
-        "STAND OFF(6)", "SCRUM HALF(7)", "PROP(8)", "HOOKER(9)", "PROP(10)",
-        "SECOND ROW(11)", "SECOND ROW(12)", "LOOSE FORWARD(13)",
-    ];
-
-    const interchangePositions: string[] = [
-        "INTERCHANGE(14)", "INTERCHANGE(15)", "INTERCHANGE(16)", "INTERCHANGE(17)"
-    ];
 
     const [visiblePlayers, setVisiblePlayers] = useState<Set<number>>(new Set());
 
@@ -148,98 +140,100 @@ const TeamsheetPage: React.FC<TeamsheetPageProps> = ({ switchToList, editingTeam
     };
 
     return (
-        <div className="teamsheet-container">
-            <Title level={2}>{editingTeamsheet ? "Edit Teamsheet" : "Create Teamsheet"}</Title>
-            <div className="teamsheet-controls">
+        <div className='app-content'>
+            <div className="teamsheet-container">
+                <Title level={2}>{editingTeamsheet ? "Edit Teamsheet" : "Create Teamsheet"}</Title>
+                <div className="teamsheet-controls">
 
-                <div className='view-button-container'>
-                    <CustomButton type="view" label="View Teamsheets" onClick={switchToList} />
-                </div>
-            </div>
-            <div className="teamsheet-layout">
-                {/* Left Column - Available Players */}
-                <div className="player-pool">
-                    <Title level={3}> Available Players</Title>
-                    <Select
-                        className="teams-dropdown"
-                        onChange={(value) => handleTeamChange(Number(value))}
-                        value={selectedTeam || undefined}
-                        disabled={!!editingTeamsheet}
-                        placeholder="Select a Team"
-                    >
-                        {teams.map((team) => (
-                            <Option key={team.id} value={team.id}>
-                                {team.name}
-                            </Option>
-                        ))}
-                    </Select>
-                    {players.map((player) =>
-                        visiblePlayers.has(player.id) && (
-                            <Card
-                                key={player.id}
-                                draggable
-                                onDragStart={(e) => handleDragStart(e, player)}
-                                className="player-card"
-                                hoverable
-                                size="small"
-                            >
-                                <Card.Meta
-                                    title={`${player.firstName} ${player.lastName}`}
-                                />
-                            </Card>
-                        )
-                    )}
-                </div>
-
-                {/* Right Column - Rugby Field + Bench */}
-                <div className="teamsheet-container">
-                    <div className="rugby-field">
-                        <Title level={3}>Teamsheet</Title>
-                        {positions.map((position) => {
-                            const player = getPlayer(position);
-                            return (
-                                <Card
-                                    key={position}
-                                    className="position-slot"
-                                    onDrop={(e) => handleDrop(e, position)}
-                                    onDragOver={handleDragOver}
-                                    onClick={() => handlePlayerClick(position)}
-                                    bordered={false}
-                                >
-                                    {player && (
-                                        <div className="player-name">
-                                            {player.firstName} {player.lastName}
-                                        </div>
-                                    )}
-                                    <strong className="position-title">{position}</strong>
-                                </Card>
-                            );
-                        })}
-                    </div>
-
-                    <div className="rugby-bench">
-                        <Title level={3}>Interchanges</Title>
-                        {interchangePositions.map((position) => {
-                            const player = getPlayer(position);
-                            return (
-                                <Card
-                                    key={position}
-                                    className="position-slot"
-                                    onDrop={(e) => handleDrop(e, position)}
-                                    onDragOver={handleDragOver}
-                                    onClick={() => handlePlayerClick(position)}
-                                >
-                                    {player && <div className="player-name">{player.firstName} {player.lastName}</div>}
-                                    <strong className="position-title">{position}</strong>
-                                </Card>
-                            );
-                        })}
+                    <div className='view-button-container'>
+                        <CustomButton type="view" label="View Teamsheets" onClick={switchToList} />
                     </div>
                 </div>
-            </div>
+                <div className="teamsheet-layout">
+                    {/* Left Column - Available Players */}
+                    <div className="player-pool">
+                        <Title level={3}> Available Players</Title>
+                        <Select
+                            className="teams-dropdown"
+                            onChange={(value) => handleTeamChange(Number(value))}
+                            value={selectedTeam || undefined}
+                            disabled={!!editingTeamsheet}
+                            placeholder="Select a Team"
+                        >
+                            {teams.map((team) => (
+                                <Option key={team.id} value={team.id}>
+                                    {team.name}
+                                </Option>
+                            ))}
+                        </Select>
+                        {players.map((player) =>
+                            visiblePlayers.has(player.id) && (
+                                <Card
+                                    key={player.id}
+                                    draggable
+                                    onDragStart={(e) => handleDragStart(e, player)}
+                                    className="player-card"
+                                    hoverable
+                                    size="small"
+                                >
+                                    <Card.Meta
+                                        title={`${player.firstName} ${player.lastName}`}
+                                    />
+                                </Card>
+                            )
+                        )}
+                    </div>
 
-            {/* Save Button */}
-            <CustomButton type="save" label="Save Teamsheet" onClick={saveTeamsheet} disabled={!selectedTeam || teamsheet?.length === 0} />
+                    {/* Right Column - Rugby Field + Bench */}
+                    <div className="teamsheet-container">
+                        <div className="rugby-field">
+                            <Title level={3}>Teamsheet</Title>
+                            {starterPositions.map((position) => {
+                                const player = getPlayer(position);
+                                return (
+                                    <Card
+                                        key={position}
+                                        className="position-slot"
+                                        onDrop={(e) => handleDrop(e, position)}
+                                        onDragOver={handleDragOver}
+                                        onClick={() => handlePlayerClick(position)}
+                                        bordered={false}
+                                    >
+                                        {player && (
+                                            <div className="player-name">
+                                                {player.firstName} {player.lastName}
+                                            </div>
+                                        )}
+                                        <strong className="position-title">{position}</strong>
+                                    </Card>
+                                );
+                            })}
+                        </div>
+
+                        <div className="rugby-bench">
+                            <Title level={3}>Interchanges</Title>
+                            {interchangePositions.map((position) => {
+                                const player = getPlayer(position);
+                                return (
+                                    <Card
+                                        key={position}
+                                        className="position-slot"
+                                        onDrop={(e) => handleDrop(e, position)}
+                                        onDragOver={handleDragOver}
+                                        onClick={() => handlePlayerClick(position)}
+                                    >
+                                        {player && <div className="player-name">{player.firstName} {player.lastName}</div>}
+                                        <strong className="position-title">{position}</strong>
+                                    </Card>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Save Button */}
+                <CustomButton type="save" label="Save Teamsheet" onClick={saveTeamsheet} disabled={!selectedTeam || teamsheet?.length === 0} />
+            </div>
         </div>
     );
 };

@@ -118,7 +118,7 @@ const TeamList: React.FC = () => {
     ];
 
     return (
-        <div>
+        <div className='app-content'>
             <Title level={2}>Teams</Title>
             <div className='add-button-container'>
                 <CustomButton type="add" label="Add New Team" onClick={openCreateForm}></CustomButton>

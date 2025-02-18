@@ -64,7 +64,7 @@ const TeamsheetList: React.FC<{ switchToPage: (teamsheet?: Teamsheet) => void }>
 
 
     return (
-        <div>
+        <div className="app-content">
             <Title level={2}>Teamsheets</Title>
             <div className="add-button-container">
             <CustomButton type="add" label="Add New Teamsheet" onClick={() => switchToPage()}></CustomButton>

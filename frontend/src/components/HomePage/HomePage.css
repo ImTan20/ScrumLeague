@@ -1,49 +1,67 @@
 /* HomePage.css */
 .carousel-slide {
-    position: relative;
-  }
-  
-  .carousel-pic {
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
-  }
-  
-  .carousel-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white; 
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-  }
-  
-  /* Make text responsive */
+  position: relative;
+}
+
+.carousel-pic {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+}
+
+.carousel-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Make text responsive */
+.carousel-text h2 {
+  font-size: 3rem;
+}
+
+.carousel-text p {
+  font-size: 1.5rem;
+}
+
+/* Adjust the size of the text for smaller screens */
+@media (max-width: 768px) {
   .carousel-text h2 {
-    font-size: 3rem;
-  }
-  
-  .carousel-text p {
-    font-size: 1.5rem;
-  }
-  
-  /* Adjust the size of the text for smaller screens */
-  @media (max-width: 768px) {
-    .carousel-text h2 {
-      font-size: 2rem;
-    }
-  
-    .carousel-text p {
-      font-size: 1.2rem;
-    }
+    font-size: 2rem;
   }
 
-  .antd-btn {
-    background-color: #feb200 !important;
-    margin-right: 20px;
+  .carousel-text p {
+    font-size: 1.2rem;
   }
-  .antd-btn:hover {
-    background-color: #b07d05 !important;
-  }
-  
+}
+
+.antd-btn {
+  background-color: #feb200 !important;
+  margin-right: 20px;
+}
+
+.antd-btn:hover {
+  background-color: #b07d05 !important;
+}
+
+.ant-carousel .slick-dots li {
+  width: 20px;
+  height: 12px;
+}
+
+
+.ant-carousel .slick-dots li button {
+  width: 20px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #444;
+}
+
+.ant-carousel .slick-dots li.slick-active button {
+  width: 20px;
+  height: 12px;
+}

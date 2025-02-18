@@ -23,9 +23,9 @@ const App: React.FC = () => {
   };
   return (
     <Router>
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout className='app-layout'>
         <AppHeader />
-        <Content style={{ padding: "20px" }}>
+        <Content>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/players" element={<PlayerList />} />

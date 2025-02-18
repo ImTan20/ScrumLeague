@@ -26,3 +26,11 @@
   text-align: center;
   font-size: calc(10px + 2vmin);
 }
+
+.app-layout {
+  min-height: 100vh;
+}
+
+.app-content {
+  padding: 20px;
+}

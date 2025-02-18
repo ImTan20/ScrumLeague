@@ -138,7 +138,7 @@ const MatchList: React.FC = () => {
   ];
 
   return (
-    <div>
+    <div className='app-content'>
       <Title level={2}>Matches</Title>
       <div className='add-button-container'>
         <CustomButton type="add" label="Add New Match" onClick={openCreateForm}></CustomButton>

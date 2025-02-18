@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel } from 'antd';
+import { Carousel, ConfigProvider } from 'antd';
 import './HomePage.css';
 import { Button } from "antd";
 import { TeamOutlined, UserOutlined, BarChartOutlined, FileTextOutlined, CalendarOutlined } from "@ant-design/icons";
@@ -8,15 +8,23 @@ import { useNavigate } from 'react-router-dom';
 const HomePage: React.FC = () => {
   const autoplaySpeed = 6000; // 6 seconds
   const navigate = useNavigate();
-
   return (
+    <ConfigProvider
+      theme={{
+        components: {
+          Carousel: { arrowSize: 40 },
+        },
+      }}
+    >
     <div>
-      <Carousel
+      <Carousel className='ant-carousel'
         autoplay
         dotPosition="bottom"
         autoplaySpeed={autoplaySpeed}
         dots
         pauseOnHover={false}
+        arrows
+        infinite={true}
       >
         <div className="carousel-slide">
           <img
@@ -80,6 +88,7 @@ const HomePage: React.FC = () => {
         </div>
       </Carousel>
     </div>
+    </ConfigProvider>
   );
 };
 

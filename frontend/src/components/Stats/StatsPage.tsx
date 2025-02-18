@@ -71,9 +71,9 @@ const StatsPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className='app-content'>
       <div className='title-container'>
-        <Title level={2}>Stats</Title>
+        <Title level={2}>Statistics</Title>
       </div>
       {/* Ant Design AutoComplete Search Bar */}
       <div className='search-container'>

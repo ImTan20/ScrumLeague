@@ -3,6 +3,7 @@ import { Modal, Input, Form, Select } from "antd";
 import { Player, Team } from "../../types";
 import { getTeams } from "../../services/TeamService";
 import CustomButton from "../Custombutton/CustomButton";
+import { positions } from "../../constants";
 
 interface PlayerFormProps {
   initialData: Player | null;
@@ -11,11 +12,6 @@ interface PlayerFormProps {
   isVisible: boolean; // Control modal visibility
   onClose: () => void; // Handle closing modal
 }
-const Positions = [
-  "FULL BACK(1)", "RIGHT WING(2)", "RIGHT CENTRE(3)", "LEFT CENTRE(4)", "LEFT WING(5)",
-  "STAND OFF(6)", "SCRUM HALF(7)", "PROP(8)", "HOOKER(9)", "PROP(10)",
-  "SECOND ROW(11)", "SECOND ROW(12)", "LOOSE FORWARD(13)","INTERCHANGE(14)", "INTERCHANGE(15)", "INTERCHANGE(16)", "INTERCHANGE(17)" 
-];
 
 const PlayerForm: React.FC<PlayerFormProps> = ({
   initialData,
@@ -98,7 +94,7 @@ const PlayerForm: React.FC<PlayerFormProps> = ({
           rules={[{ required: true, message: "Position is required" }]}
         >
           <Select placeholder="Select position">
-            {Positions.map((position) => (
+            {positions.map((position) => (
               <Select.Option key={position} value={position}>
                 {position}
               </Select.Option>
